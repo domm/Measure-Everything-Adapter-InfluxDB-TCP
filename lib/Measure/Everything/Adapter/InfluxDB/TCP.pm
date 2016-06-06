@@ -14,8 +14,8 @@ sub init {
     my $self = shift;
 
     my $socket = IO::Socket::INET->new(
-        PeerAddr  => $config{host} || 'localhost',
-        PeerPort  => $config{port} || 8094,
+        PeerAddr  => $self->{host} || 'localhost',
+        PeerPort  => $self->{port} || 8094,
         Proto     => 'tcp',
     );
     $self->{socket} = $socket;
