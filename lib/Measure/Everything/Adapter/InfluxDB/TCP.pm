@@ -9,22 +9,35 @@ our $VERSION = '1.000';
 use base qw(Measure::Everything::Adapter::Base);
 use InfluxDB::LineProtocol qw(data2line);
 use IO::Socket::INET;
+use Log::Any qw($log);
 
 sub init {
     my $self = shift;
 
+    my $host = $self->{host} || 'localhost';
+    my $port = $self->{port} || 8094;
+
     my $socket = IO::Socket::INET->new(
-        PeerAddr  => $self->{host} || 'localhost',
-        PeerPort  => $self->{port} || 8094,
-        Proto     => 'tcp',
+        PeerAddr => $host,
+        PeerPort => $port,
+        Proto    => 'tcp',
     );
-    $self->{socket} = $socket;
+    if ($socket) {
+        $self->{socket} = $socket;
+    }
+    else {
+        $log->errorf(
+            "Cannot set up TCP socket on %s:%s, no stats will be recorded!",
+            $host, $port );
+    }
 }
 
 sub write {
     my $self = shift;
     my $line = data2line(@_);
-    return $self->{socket}->send( $line );
+    if ( $self->{socket} ) {
+        return $self->{socket}->send($line);
+    }
 }
 
 1;
