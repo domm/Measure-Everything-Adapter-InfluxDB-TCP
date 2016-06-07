@@ -62,7 +62,12 @@ service, which will forward them to L<InfluxDB|https://influxdb.com/>.
 No buffering whatsoever, so there is one TCP request per call to
 C<< $stats->write >>. This might be a bad idea.
 
-If a request fails no further error handling is done. The metric will be lost.
+If TCP listener is not available when C<set> is called, an error will
+be written via C<Log::Any>. C<write> will silently discard all
+metrics, no data will be sent to Telegraf / InfluxDB.
+
+If a request fails no further error handling is done. The metric will
+be lost.
 
 =head3 OPTIONS
 
