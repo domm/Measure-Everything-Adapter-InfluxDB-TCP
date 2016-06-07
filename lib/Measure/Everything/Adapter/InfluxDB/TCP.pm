@@ -2,12 +2,12 @@ package Measure::Everything::Adapter::InfluxDB::TCP;
 use strict;
 use warnings;
 
-our $VERSION = '1.001';
+our $VERSION = '1.002';
 
 # ABSTRACT: Send stats to Influx via TCP using Telegraf
 
 use base qw(Measure::Everything::Adapter::Base);
-use InfluxDB::LineProtocol qw(data2line);
+use InfluxDB::LineProtocol qw();
 use IO::Socket::INET;
 use Log::Any qw($log);
 
@@ -16,6 +16,8 @@ sub init {
 
     my $host = $self->{host} || 'localhost';
     my $port = $self->{port} || 8094;
+    my $precision = $self->{precision} ? 'precision='.$self->{precision} : '';
+    InfluxDB::LineProtocol->import('data2line', $precision);
 
     my $socket = IO::Socket::INET->new(
         PeerAddr => $host,
@@ -48,6 +50,7 @@ __END__
     Measure::Everything::Adapter->set( 'InfluxDB::TCP',
         host => 'localhost',   # default
         port => 8094,          # default
+        precision => 'ms'      # default is ns (nanoseconds)
     );
 
     use Measure::Everything qw($stats);
@@ -82,6 +85,12 @@ Name of the host where your Telegraf is running. Default to C<localhost>.
 =item * port
 
 Port your Telegraf is listening. Defaults to C<8094>.
+
+=item * precision
+
+A valid InfluxDB precision. Default to undef (i.e. nanoseconds). Do
+not set it if you're talking with Telegraf, as Telegraf will always
+interpret the timestamp as nanoseconds.
 
 =back
 
