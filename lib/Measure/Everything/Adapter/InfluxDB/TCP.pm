@@ -36,7 +36,7 @@ sub write {
     my $self = shift;
     my $line = data2line(@_);
     if ( $self->{socket} ) {
-        return $self->{socket}->send($line);
+        return $self->{socket}->send($line."\n");
     }
 }
 
