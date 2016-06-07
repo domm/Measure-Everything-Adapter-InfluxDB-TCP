@@ -2,7 +2,7 @@ package Measure::Everything::Adapter::InfluxDB::TCP;
 use strict;
 use warnings;
 
-our $VERSION = '1.000';
+our $VERSION = '1.001';
 
 # ABSTRACT: Send stats to Influx via TCP using Telegraf
 
