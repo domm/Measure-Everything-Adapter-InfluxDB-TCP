@@ -2,7 +2,7 @@ package Measure::Everything::Adapter::InfluxDB::TCP;
 use strict;
 use warnings;
 
-our $VERSION = '1.002';
+our $VERSION = '1.003';
 
 # ABSTRACT: Send stats to Influx via TCP using Telegraf
 
@@ -101,4 +101,23 @@ not set it if you're talking with Telegraf, as Telegraf will always
 interpret the timestamp as nanoseconds.
 
 =back
+
+=head3 Handling server disconnect
+
+C<Measure::Everything::Adapter::InfluxDB::TCP> installs a C<local>
+handler for C<SIGPIPE> to handle a disconnect from the server. If the
+server goes away, C<InfluxDB::TCP> will try to reconnect every time a
+stat is written. As of now (1.003), this behavior is hardcoded.
+
+You might want to check out
+L<Measure::Everything::Adapter::InfluxDB::UDP> for an even lossier,
+but more failure tolerant way to send your stats.
+
+See also L<this blog post|http://domm.plix.at/perl/2016_09_too_dumb_for_tcp.html>, where
+HJansen provided the correct solution to my problem. Nicholas Clark
+also pointed me in the right direction (in #Austria.pm)
+
+=head3 Example
+
+See L<example/send_metrics.pl> for a working example.
 
