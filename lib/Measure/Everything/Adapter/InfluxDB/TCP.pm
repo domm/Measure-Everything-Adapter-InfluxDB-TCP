@@ -37,9 +37,17 @@ sub init {
 sub write {
     my $self = shift;
     my $line = data2line(@_);
-    if ( $self->{socket} ) {
-        return $self->{socket}->send($line."\n");
+
+    if ($self->{socket} ) {
+        local $SIG{'PIPE'} = sub { die "SIGPIPE" };
+        eval {
+            $self->{socket}->send($line."\n");
+        };
+        return unless $@;
+        $log->errorf("write error %s", $@);
     }
+    undef $self->{socket};
+    $self->init;
 }
 
 1;
