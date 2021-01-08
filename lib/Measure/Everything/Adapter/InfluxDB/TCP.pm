@@ -1,10 +1,10 @@
 package Measure::Everything::Adapter::InfluxDB::TCP;
-use strict;
-use warnings;
-
-our $VERSION = '1.003';
 
 # ABSTRACT: Send stats to Influx via TCP using Telegraf
+# VERSION
+
+use strict;
+use warnings;
 
 use base qw(Measure::Everything::Adapter::Base);
 use InfluxDB::LineProtocol qw();
