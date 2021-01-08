@@ -1,6 +1,8 @@
 Changes for Measure::Everything::Adapter::InfluxDB::TCP
 
 {{$NEXT}}
+
+1.004     2021-01-08 22:20:19+01:00
     - dist housekeeping, Dist::Zilla::PluginBundle::Author::DOMM
 
 
