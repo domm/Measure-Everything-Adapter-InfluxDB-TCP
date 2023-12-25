@@ -67,7 +67,7 @@ also pointed me in the right direction (in #Austria.pm)
 
 ### Example
 
-See ["send\_metrics.pl" in example](https://metacpan.org/pod/example#send_metrics.pl) for a working example.
+See ["send\_metrics.pl" in example](https://github.com/domm/Measure-Everything-Adapter-InfluxDB-TCP/blob/master/example/send_metrics.pl) for a working example.
 
 # AUTHOR
 
