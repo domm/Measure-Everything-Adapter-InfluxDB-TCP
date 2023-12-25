@@ -119,5 +119,5 @@ also pointed me in the right direction (in #Austria.pm)
 
 =head3 Example
 
-See L<example/send_metrics.pl> for a working example.
+See L<example/send_metrics.pl|https://metacpan.org/release/Measure-Everything-Adapter-InfluxDB-TCP/source/example/send_metrics.pl> for a working example.
 
